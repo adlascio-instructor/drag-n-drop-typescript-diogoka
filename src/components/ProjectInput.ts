@@ -1,3 +1,5 @@
+import { Validatable, validate } from "../helpers/validation.js";
+
 const Autobind = (
   _target: any,
   _methodName: string | Symbol,
@@ -63,13 +65,39 @@ class ProjectInput {
     }
 
     private gatherUserInput(): [string, string, number] | void {
-        if(this.titleInputElement.value.trim().length === 0 || this.descriptionInputElement.value.trim().length === 0 || this.peopleInputElement.value.trim().length === 0) {
-            alert('Invalid input, please try again');
-            return;
-        }
         let enteredTitle = this.titleInputElement.value;
         let enteredDescription = this.descriptionInputElement.value;
         let enteredPeople = this.peopleInputElement.value;
+
+        const titleValidatable: Validatable = {
+            value: enteredTitle,
+            required: true
+        }
+        const descriptionValidatable: Validatable = {
+            value: enteredDescription,
+            required: true,
+        }
+        const peopleValidatable: Validatable = {
+            value: +enteredPeople,
+            required: true,
+            min: 1,
+            max: 14
+        }
+        if(!validate(titleValidatable)) {
+            alert('Insert a valid title.');
+            return;
+        }
+        if(!validate(descriptionValidatable)) {
+            alert('Insert a valid description.');
+            return;
+        }
+        if(!validate(peopleValidatable)) {
+            alert('Insert a valid number of people.');
+            return;
+        }
+
+
+
         return [enteredTitle, enteredDescription, +enteredPeople];             
     }
 
