@@ -1,4 +1,5 @@
 import { Validatable, validate } from "../helpers/validation.js";
+import { projectState } from "./ProjectState.js";
 
 const Autobind = (
   _target: any,
@@ -58,6 +59,7 @@ class ProjectInput {
             console.log("title", title);
             console.log("description", description);
             console.log("people", people);
+            projectState.addProject(title, description, people);
             this.clearInputs();
         }
         
