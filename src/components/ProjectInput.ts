@@ -59,7 +59,7 @@ class ProjectInput {
             console.log("title", title);
             console.log("description", description);
             console.log("people", people);
-            projectState.addProject(title, description, people);
+            projectState.addProject(title, description, people, 'ACTIVE');
             this.clearInputs();
         }
         

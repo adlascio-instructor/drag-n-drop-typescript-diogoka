@@ -1,7 +1,9 @@
+type Listener = (project: Project[]) => void;
+
 class ProjectState {
     private static instance: ProjectState;
-    private projects: any[] = [];
-    private listeners: any[] = [];
+    private projects: Project[] = [];
+    private listeners: Listener[] = [];
 
     private constructor() {}
 
@@ -14,12 +16,14 @@ class ProjectState {
     }
 
 
-    addProject(title: string, description: string, people: number) {
+    addProject(title: string, description: string, people: number, status: ProjectStatus) {
         let newProject = {
             id: Math.random().toString(),
             title: title,
             description: description,
-            people: people
+            people: people,
+            status: status
+            
         }
         this.projects.push(newProject);
         for(let listenerFn of this.listeners) {
@@ -27,7 +31,7 @@ class ProjectState {
             
         }
     }
-    addListener(listenerFn: Function) {
+    addListener(listenerFn: Listener) {
         this.listeners.push(listenerFn);
     }
 
