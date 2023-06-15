@@ -4,7 +4,7 @@ class ProjectList {
     templateElement: HTMLTemplateElement;
     hostElement: HTMLDivElement;
     private element: HTMLElement;
-    assignedProjects: any[] = [];
+    assignedProjects: Project[] = [];
 
     constructor(private type: 'active' | 'finished') {
         this.templateElement = document.getElementById('project-list')! as HTMLTemplateElement;
@@ -14,7 +14,7 @@ class ProjectList {
         this.element.id = `${this.type}-projects`;
         this.attach();
         this.renderContent();
-        projectState.addListener((projects: any[]) => {
+        projectState.addListener((projects: Project[]) => {
             this.assignedProjects = projects;
             this.renderProjects();
         })
