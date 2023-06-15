@@ -15,8 +15,12 @@ class ProjectList {
         this.attach();
         this.renderContent();
         projectState.addListener((projects: Project[]) => {
-            this.assignedProjects = projects;
-            this.renderProjects();
+            if(this.type === 'active'){
+                this.assignedProjects = projects;
+                this.renderProjects();
+            } else {
+                return;
+            }
         })
         
     }
@@ -35,6 +39,7 @@ class ProjectList {
     renderProjects() {
         let listEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
         listEl.innerHTML = '';
+        listEl.textContent = '';
         for(let projectItem of this.assignedProjects) {
             let listItem = document.createElement('li');
             listItem.textContent = projectItem.title;
