@@ -1,5 +1,6 @@
 import { Validatable, validate } from "../helpers/validation.js";
 import { projectState } from "./ProjectState.js";
+import Component from "./Base-component.js";
 
 const Autobind = (
   _target: any,
@@ -18,34 +19,24 @@ const Autobind = (
   return adjDescriptor;
 };
 
-class ProjectInput {
-    templateElement: HTMLTemplateElement;
-    hostElement: HTMLDivElement;
-    private element: HTMLFormElement;
+class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
+
 
     titleInputElement: HTMLInputElement;
     descriptionInputElement: HTMLInputElement;
     peopleInputElement: HTMLInputElement;
 
     constructor() {
-        this.templateElement = document.getElementById('project-input')! as HTMLTemplateElement;
-        this.hostElement = document.getElementById('app')! as HTMLDivElement;        
-        const importedNode = document.importNode(this.templateElement.content, true);
-        this.element = importedNode.firstElementChild as HTMLFormElement;
-        this.element.id = "user-input";
+        super("project-input", "app","user-input");     
         this.configure();
-        this.attach();
         this.titleInputElement = document.getElementById('title')! as HTMLInputElement;
         this.descriptionInputElement = document.getElementById('description')! as HTMLInputElement;
         this.peopleInputElement = document.getElementById('people')! as HTMLInputElement;          
 }
-
-    private attach() {
-        this.hostElement.append(this.element);
-    }
+    renderContent() {}
 
     
-    private configure() {
+    configure() {
         this.element.addEventListener('submit', this.submitHandler);
     }
     

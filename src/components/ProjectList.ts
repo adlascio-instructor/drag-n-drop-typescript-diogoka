@@ -1,19 +1,17 @@
 import { projectState } from "./ProjectState.js";
+import Component from "./Base-component.js";
 
-class ProjectList {
-    templateElement: HTMLTemplateElement;
-    hostElement: HTMLDivElement;
-    private element: HTMLElement;
+class ProjectList extends Component<HTMLDivElement, HTMLUListElement> {
+
     assignedProjects: Project[] = [];
 
     constructor(private type: 'active' | 'finished') {
-        this.templateElement = document.getElementById('project-list')! as HTMLTemplateElement;
-        this.hostElement = document.getElementById('app')! as HTMLDivElement;        
-        const importedNode = document.importNode(this.templateElement.content, true);
-        this.element = importedNode.firstElementChild as HTMLElement;
-        this.element.id = `${this.type}-projects`;
-        this.attach();
+        super("project-list", "app",`${type}-projects`);
         this.renderContent();
+        this.configure();        
+    }
+    
+    configure() {
         projectState.addListener((projects: Project[]) => {
             if(this.type === 'active'){
                 this.assignedProjects = projects;
@@ -25,14 +23,11 @@ class ProjectList {
         
     }
 
-    private attach() {
-        this.hostElement.append(this.element);
-    }
-
-    private renderContent() {
+    renderContent() {
         let listId = `${this.type}-projects-list`;
         this.element.querySelector('ul')!.id = listId;
-        this.element.querySelector(`h2`)!.textContent = this.type.toUpperCase() + ' PROJECTS';
+        const title = this.type + ' PROJECTS';     
+        this.element.querySelector(`h2`)!.textContent = title.toUpperCase();
    
     }
 
