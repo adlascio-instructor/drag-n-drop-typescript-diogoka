@@ -30,16 +30,29 @@ class ProjectState {
         
         
                 
-        for(let listenerFn of this.listeners) {
-            listenerFn([...this.projects]);
-            
-        }
+        this.updateListener();
         console.log("this.listeners", this.listeners);
         
     }
 
     addListener(listenerFn: Listener) {
         this.listeners.push(listenerFn);
+    }
+    
+    updateListener(){
+        for(let listenerFn of this.listeners) {
+            listenerFn([...this.projects]);
+            
+        }
+    }
+
+    moveProject(projectId: string, newStatus: ProjectStatus) {
+        let foundProject = this.projects.find(project => project.id === projectId);
+        if(foundProject && foundProject.status !== newStatus) {
+            foundProject.status = newStatus;
+            this.updateListener();
+        }
+
     }
 
 }
