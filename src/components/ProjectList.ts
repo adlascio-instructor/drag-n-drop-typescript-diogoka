@@ -43,7 +43,9 @@ class ProjectList extends Component<HTMLDivElement, HTMLUListElement> implements
 
     @Autobind
     dropHandler(event: DragEvent): void {
-        console.log(event.dataTransfer!.getData('text/plain'));
+        console.log("dataTransferDropHandler", event.dataTransfer!.getData('text/plain'));
+        let projectId = event.dataTransfer!.getData('text/plain');
+        projectState.moveProject(projectId, this.type === 'active' ? "ACTIVE" : "FINISHED");
         
         
     }
@@ -56,7 +58,11 @@ class ProjectList extends Component<HTMLDivElement, HTMLUListElement> implements
     }
     
     configure() {
-
+        let ul = this.element.querySelector('ul')!;
+        
+        ul.addEventListener('dragover', this.dragOverHandler);
+        ul.addEventListener('drop', this.dropHandler);
+        ul.addEventListener('dragleave', this.dragLeaveHandler);
 
         projectState.addListener((projects: Project[]) => {         
 
@@ -68,9 +74,6 @@ class ProjectList extends Component<HTMLDivElement, HTMLUListElement> implements
             }
         })
 
-        this.element.addEventListener('dragover', this.dragOverHandler);
-        this.element.addEventListener('drop', this.dropHandler);
-        this.element.addEventListener('dragleave', this.dragLeaveHandler);
         
     }
 

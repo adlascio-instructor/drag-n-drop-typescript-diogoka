@@ -24,6 +24,7 @@ class ProjectItem extends Component<HTMLDivElement, HTMLFormElement> implements 
     title: string;
     people: number;
     description: string;
+    id: string;
     
 
     constructor(hostId: string, project: Project) {
@@ -32,13 +33,14 @@ class ProjectItem extends Component<HTMLDivElement, HTMLFormElement> implements 
         this.title = project.title;
         this.people = project.people;
         this.description = project.description;
+        this.id = project.id;
         this.configure();
         this.renderContent();
     }
     
     @Autobind
     dragStartHandler(event: DragEvent): void {       
-        event.dataTransfer!.setData("text/plain", this.project.id);
+        event.dataTransfer!.setData("text/plain", this.id);
         event.dataTransfer!.effectAllowed = "move";
         
     }

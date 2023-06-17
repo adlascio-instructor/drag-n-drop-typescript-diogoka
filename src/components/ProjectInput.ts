@@ -48,7 +48,7 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
             const [title, description, people] = userInput;
             
             
-            projectState.addProject(title, description, people, 'ACTIVE');
+            projectState.addProject(title, description, people, 'FINISHED');
             this.clearInputs();
         }
         
