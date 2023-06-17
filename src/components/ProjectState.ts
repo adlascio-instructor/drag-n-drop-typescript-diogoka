@@ -25,12 +25,19 @@ class ProjectState {
             status: status
             
         }
+        
         this.projects.push(newProject);
+        
+        
+                
         for(let listenerFn of this.listeners) {
             listenerFn([...this.projects]);
             
         }
+        console.log("this.listeners", this.listeners);
+        
     }
+
     addListener(listenerFn: Listener) {
         this.listeners.push(listenerFn);
     }
