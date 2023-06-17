@@ -1,7 +1,25 @@
 import Component from "./Base-component.js";
+import { Draggable } from "../helpers/drag-drop.js";
+
+const Autobind = (
+  _target: any,
+  _methodName: string | Symbol,
+  descriptor: PropertyDescriptor
+) => {
+  const originalMethod = descriptor.value;
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+  return adjDescriptor;
+};
 
 
-class ProjectItem extends Component<HTMLDivElement, HTMLFormElement>{
+class ProjectItem extends Component<HTMLDivElement, HTMLFormElement> implements Draggable{
     project: Project;
     title: string;
     people: number;
@@ -17,8 +35,21 @@ class ProjectItem extends Component<HTMLDivElement, HTMLFormElement>{
         this.configure();
         this.renderContent();
     }
+    
+    @Autobind
+    dragStartHandler(event: DragEvent): void {
+        console.log(event, 'dragStart');
+        
+    }
+    @Autobind
+    dragEndHandler(event: DragEvent): void {
+        console.log(event, 'dragEnd');
+    }
 
-    configure(){}
+    configure(){
+        this.element.addEventListener('dragstart', this.dragStartHandler);
+        this.element.addEventListener('dragend', this.dragEndHandler);
+    }
 
     renderContent() {     
         this.element.querySelector('h2')!.textContent = this.title;       
