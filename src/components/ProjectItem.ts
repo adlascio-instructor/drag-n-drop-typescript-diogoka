@@ -37,8 +37,9 @@ class ProjectItem extends Component<HTMLDivElement, HTMLFormElement> implements 
     }
     
     @Autobind
-    dragStartHandler(event: DragEvent): void {
-        console.log(event, 'dragStart');
+    dragStartHandler(event: DragEvent): void {       
+        event.dataTransfer!.setData("text/plain", this.project.id);
+        event.dataTransfer!.effectAllowed = "move";
         
     }
     @Autobind
