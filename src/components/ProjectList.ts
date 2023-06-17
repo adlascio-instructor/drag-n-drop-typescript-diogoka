@@ -1,8 +1,26 @@
 import { projectState } from "./ProjectState.js";
 import Component from "./Base-component.js";
 import ProjectItem from "./ProjectItem.js";
+import { DragTarget } from "../helpers/drag-drop.js";
 
-class ProjectList extends Component<HTMLDivElement, HTMLUListElement> {
+const Autobind = (
+  _target: any,
+  _methodName: string | Symbol,
+  descriptor: PropertyDescriptor
+) => {
+  const originalMethod = descriptor.value;
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+  return adjDescriptor;
+};
+
+class ProjectList extends Component<HTMLDivElement, HTMLUListElement> implements DragTarget{
 
     assignedProjects: Project[] = [];
 
@@ -10,6 +28,27 @@ class ProjectList extends Component<HTMLDivElement, HTMLUListElement> {
         super("project-list", "app",`${type}-projects`);
         this.configure();        
         this.renderContent();
+    }
+
+    @Autobind
+    dragOverHandler(event: DragEvent): void {
+        console.log(event, 'dragOver');
+        this.element.querySelector('ul')!.classList.add('droppable');
+
+        
+    }
+
+    @Autobind
+    dropHandler(event: DragEvent): void {
+        console.log(event, 'drop');
+        
+    }
+
+    @Autobind
+    dragLeaveHandler(event: DragEvent): void {
+        console.log(event, 'dragLeave');
+        this.element.querySelector('ul')!.classList.remove('droppable');
+        
     }
     
     configure() {
@@ -24,6 +63,10 @@ class ProjectList extends Component<HTMLDivElement, HTMLUListElement> {
                 return;
             }
         })
+
+        this.element.addEventListener('dragover', this.dragOverHandler);
+        this.element.addEventListener('drop', this.dropHandler);
+        this.element.addEventListener('dragleave', this.dragLeaveHandler);
         
     }
 
