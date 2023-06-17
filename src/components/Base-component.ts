@@ -10,7 +10,7 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
         this.element = importedNode.firstElementChild as U;
         this.element.id = `${newElementId}`;
         this.attach();
-        this.renderContent();        
+        // this.renderContent(); ver com o Arthur       
     }
 
     protected attach() {

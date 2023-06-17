@@ -14,14 +14,11 @@ function validate(validatableInput: Validatable) {
     if(validatableInput.required) {
         isValid = isValid && validatableInput.value.toString().trim().length !== 0; 1  
     }
-    
-    console.log("inputV", validatableInput.value);
-    
+        
 
     if(typeof validatableInput.value === 'number') {
         isValid = isValid && validatableInput.value > validatableInput.min! && validatableInput.value <= validatableInput.max!;
-        console.log("isValid", isValid);
-        
+      
     }
 
     
