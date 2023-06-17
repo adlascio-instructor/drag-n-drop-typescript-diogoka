@@ -32,15 +32,19 @@ class ProjectList extends Component<HTMLDivElement, HTMLUListElement> implements
 
     @Autobind
     dragOverHandler(event: DragEvent): void {
-        console.log(event, 'dragOver');
         this.element.querySelector('ul')!.classList.add('droppable');
+        if(event.dataTransfer && event.dataTransfer.types[0] === 'text/plain') {
+            event.preventDefault();
+            console.log('preventDefault');
+        }
 
         
     }
 
     @Autobind
     dropHandler(event: DragEvent): void {
-        console.log(event, 'drop');
+        console.log(event.dataTransfer!.getData('text/plain'));
+        
         
     }
 
