@@ -13,8 +13,5 @@ class Project {
         this.description = description;
         this.people = people;
         this.status = status;
-
     }
-
-
 }

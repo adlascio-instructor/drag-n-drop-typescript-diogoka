@@ -65,33 +65,22 @@ class ProjectList extends Component<HTMLDivElement, HTMLUListElement> implements
         ul.addEventListener('dragleave', this.dragLeaveHandler);
 
         projectState.addListener((projects: Project[]) => {         
-
-            if(this.type === 'active'){
-                this.assignedProjects = projects;
-                this.renderProjects();
-            } else {
-                return;
-            }
+            this.assignedProjects = projects.filter(project => {
+                if(this.type === 'active') {
+                    return project.status === "ACTIVE";
+                }
+                return project.status === "FINISHED";
+            })
+            this.renderProjects();
         })
 
         
     }
 
     renderContent() {
-      
-        console.log("this.type", this.type);
-        
         let listId = `${this.type}-projects-list`;
         this.element.querySelector('ul')!.id = listId;
         this.element.querySelector(`h2`)!.textContent = this.type.toUpperCase() + ' PROJECTS';
-
-
-        // let listId = `${this.type}-projects-list`;
-        // this.element.querySelector('ul')!.id = listId;
-        // const title = this.type + ' PROJECTS';     
-        // this.element.querySelector(`h2`)!.textContent = title.toUpperCase();
-        
-   
     }
 
     renderProjects() {

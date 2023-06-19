@@ -25,13 +25,9 @@ class ProjectState {
             status: status
             
         }
-        
-        this.projects.push(newProject);
-        
-        
-                
+        this.projects.push(newProject);        
         this.updateListener();
-        console.log("this.listeners", this.listeners);
+        
         
     }
 

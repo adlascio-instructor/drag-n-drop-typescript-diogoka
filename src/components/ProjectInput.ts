@@ -46,9 +46,7 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
         let userInput = this.gatherUserInput();        
         if(Array.isArray(userInput)) {
             const [title, description, people] = userInput;
-            
-            
-            projectState.addProject(title, description, people, 'FINISHED');
+            projectState.addProject(title, description, people, 'ACTIVE');
             this.clearInputs();
         }
         
