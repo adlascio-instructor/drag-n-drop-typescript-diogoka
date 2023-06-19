@@ -56,9 +56,7 @@ class ProjectItem extends Component<HTMLDivElement, HTMLFormElement> implements 
 
     renderContent() {     
         this.element.querySelector('h2')!.textContent = this.title;       
-        this.element.querySelector('h3')!.textContent = this.members;
-   
-        
+        this.element.querySelector('h3')!.textContent = this.members;     
         this.element.querySelector('p')!.textContent = this.description;
     }
 

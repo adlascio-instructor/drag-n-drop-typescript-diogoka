@@ -17,7 +17,7 @@ function validate(validatableInput: Validatable) {
         
 
     if(typeof validatableInput.value === 'number') {
-        isValid = isValid && validatableInput.value > validatableInput.min! && validatableInput.value <= validatableInput.max!;
+        isValid = isValid && validatableInput.value >= validatableInput.min! && validatableInput.value <= validatableInput.max!;
       
     }
 
